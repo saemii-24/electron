@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>AI Agent</title>
+  </head>
+  <body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="w-full max-w-sm bg-white rounded-xl shadow p-4">
+      <h1 class="text-lg font-semibold mb-3">일정 추가</h1>
+
+      <input
+        id="input"
+        class="w-full border rounded-md px-3 py-2 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-black"
+        placeholder="예: 내일 오후 3시 회의"
+      />
+
+      <button
+        onclick="submitSchedule()"
+        class="w-full bg-black text-white py-2 rounded-md text-sm hover:bg-gray-800"
+      >
+        추가
+      </button>
+
+      <p id="status" class="text-xs text-gray-500 mt-3"></p>
+    </div>
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>
