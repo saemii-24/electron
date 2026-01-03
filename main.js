@@ -1,11 +1,13 @@
-const { app, BrowserWindow, Notification } = require("electron");
+import "dotenv/config";
+import { app, BrowserWindow, Notification, ipcMain } from "electron";
+import { askGemini } from "./gemini.js";
 
 let win;
 
-function showNotification() {
+function showNotification(message = "에이전트가 실행되었습니다") {
   new Notification({
     title: "AI Schedule Agent",
-    body: "에이전트가 실행되었습니다",
+    body: message,
   }).show();
 }
 
@@ -25,5 +27,15 @@ function createWindow() {
     showNotification();
   });
 }
+
+ipcMain.handle("ask-gemini", async (event, userInput) => {
+  console.log("Gemini 요청:", userInput);
+
+  const result = await askGemini(userInput);
+
+  showNotification(result.slice(0, 50));
+
+  return result;
+});
 
 app.whenReady().then(createWindow);

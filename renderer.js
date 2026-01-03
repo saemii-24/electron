@@ -1,8 +1,9 @@
+const { ipcRenderer } = require("electron");
+
 const input = document.getElementById("input");
-const button = document.getElementById("submitBtn");
 const status = document.getElementById("status");
 
-button.addEventListener("click", () => {
+window.submitSchedule = async function () {
   const text = input.value;
 
   if (!text) {
@@ -10,5 +11,13 @@ button.addEventListener("click", () => {
     return;
   }
 
-  status.innerText = `입력됨: ${text}`;
-});
+  status.innerText = "AI가 생각 중입니다...";
+
+  try {
+    const result = await ipcRenderer.invoke("ask-gemini", text);
+    status.innerText = result;
+  } catch (error) {
+    console.error(error);
+    status.innerText = "AI 호출 중 오류가 발생했습니다";
+  }
+};
