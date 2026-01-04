@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { app, BrowserWindow, Notification, ipcMain } from "electron";
 import { askGemini } from "./gemini.js";
+import { authorizeCalendar } from "./calendar.js";
 
 let win;
 
@@ -38,4 +39,8 @@ ipcMain.handle("ask-gemini", async (event, userInput) => {
   return result;
 });
 
+ipcMain.handle("google-auth", async () => {
+  const result = await authorizeCalendar();
+  return result;
+});
 app.whenReady().then(createWindow);
